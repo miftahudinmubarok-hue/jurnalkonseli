@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-18",
+  "userEmail": "dewi.konseli@example.com",
+  "userName": "Dewi Lestari",
+  "status": "submitted",
+  "submittedAt": "2026-10-18T13:01:23.119Z",
+  "updatedAt": "2026-10-18T13:01:23.119Z",
+  "safetyFlag": false,
+  "safetyFlagReasons": [],
+  "moodCheckIn": {
+    "moodMorning": 7,
+    "moodAfternoon": 8,
+    "moodEvening": 8,
+    "dominantEmotions": [
+      "tenang",
+      "lega",
+      "bersyukur"
+    ],
+    "moodNote": "Hari ini merasa lebih rileks dan tenang setelah latihan pernapasan."
+  },
+  "grounding": {
+    "logs": []
+  },
+  "breathing": {
+    "logs": []
+  },
+  "symptoms": {
+    "items": [],
+    "patternsNoticed": ""
+  },
+  "thoughts": {
+    "items": []
+  },
+  "sleepHabits": {
+    "sleepTime": "23:00",
+    "wakeTime": "07:00",
+    "durationHours": 8,
+    "sleepQuality": 8,
+    "frequentAwakening": false
+  },
+  "safety": {
+    "items": []
+  }
+}

@@ -1,4 +1,4 @@
-import { DailyJournalEntry, RuleAlertBadge } from '../src/types/journal.js';
+import type { DailyJournalEntry, RuleAlertBadge } from '../src/types/journal.ts';
 
 export const RISK_KEYWORDS = [
   'menyakiti diri',

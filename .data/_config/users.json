@@ -1,15 +1,8 @@
 {
   "counselorEmails": [
-    "miftahudinmubarok@gmail.com",
-    "konselor.salsabila@gmail.com",
-    "konselor.dewi@gmail.com"
+    "miftahudinmubarok@gmail.com"
   ],
-  "consentTimestamps": {
-    "anisa.pertiwi@gmail.com": "2026-10-04T11:45:05.031Z",
-    "budi.santoso@gmail.com": "2026-10-04T11:45:06.092Z",
-    "citra.lestari@gmail.com": "2026-10-04T11:45:06.094Z",
-    "konselor.salsabila@gmail.com": "2026-10-18T12:45:20.174Z"
-  },
+  "consentTimestamps": {},
   "emergencySettings": {
     "emergencyNumber": "119",
     "hotlineName": "Layanan Kesehatan Jiwa Kemenkes (Sejiwa)",
@@ -25,14 +18,5 @@
     "inactiveDays": 3,
     "highWorryThreshold": 7
   },
-  "accounts": [
-    {
-      "email": "dewi.konseli@example.com",
-      "name": "Dewi Lestari",
-      "passwordHash": "785fac8e6209e3eb99a77343ec09d96f29ac672be981230306ba7b0d603da123e7699bea27d617b567563635e57f99b08c59824288adf0fca90ffc8118f9ea58",
-      "salt": "8d815cd791bf3e24b6541776dc4febeb",
-      "role": "konseli",
-      "createdAt": "2026-10-18T13:01:15.649Z"
-    }
-  ]
+  "accounts": []
 }

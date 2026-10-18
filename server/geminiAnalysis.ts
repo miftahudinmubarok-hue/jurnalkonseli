@@ -1,10 +1,10 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import {
+import type {
   DailyJournalEntry,
   WeeklyAnalysisOutput,
   WeeklyAnalysisRecord,
   WeeklyAnalysisStatistics,
-} from '../src/types/journal.js';
+} from '../src/types/journal.ts';
 
 export function calculateWeekStatistics(entries: DailyJournalEntry[]): WeeklyAnalysisStatistics {
   const daysFilled = entries.length;

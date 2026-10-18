@@ -144,15 +144,6 @@ export default function App() {
     setActiveView(res.user.role === 'konselor' ? 'counselor' : 'journal');
   };
 
-  const handleDemoLogin = async (email: string, name: string) => {
-    const res = await api.verifyAuth({ demoUser: { email, name } });
-    setStoredToken(res.token);
-    setUser(res.user);
-    if (!res.user.consentGivenAt) {
-      setShowConsentModal(true);
-    }
-    setActiveView(res.user.role === 'konselor' ? 'counselor' : 'journal');
-  };
 
   const handleLogout = () => {
     setStoredToken(null);
@@ -220,7 +211,6 @@ export default function App() {
             storageMode={storageMode}
             onLoginManual={handleManualLogin}
             onRegisterManual={handleManualRegister}
-            onDemoLogin={handleDemoLogin}
           />
         ) : (
           <>

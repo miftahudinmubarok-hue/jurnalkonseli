@@ -20,13 +20,11 @@ interface LoginViewProps {
     password: string,
     role: 'konseli' | 'konselor'
   ) => Promise<void>;
-  onDemoLogin: (email: string, name: string) => Promise<void>;
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({
   onLoginManual,
   onRegisterManual,
-  onDemoLogin,
 }) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
@@ -98,19 +96,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
       await onRegisterManual(regName.trim(), regEmail.trim(), regPassword, regRole);
     } catch (err: any) {
       setErrorMsg(err.message || 'Gagal mendaftar akun.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleQuickLogin = async (email: string, name: string) => {
-    setLoading(true);
-    setErrorMsg(null);
-    setSuccessMsg(null);
-    try {
-      await onDemoLogin(email, name);
-    } catch (e: any) {
-      setErrorMsg(e.message || 'Gagal masuk akun simulasi.');
     } finally {
       setLoading(false);
     }
@@ -386,101 +371,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
             </form>
           )}
 
-          {/* Quick Demo Accounts Access */}
-          <div className="pt-5 mt-5 border-t border-stone-100 space-y-3">
-            <div className="flex items-center justify-between text-xs text-stone-500">
-              <span className="font-semibold text-stone-700">Atau Coba Cepat dengan Akun Contoh:</span>
-              <span className="text-[11px] text-emerald-800 font-medium">1-Klik Langsung</span>
-            </div>
-
-            <div className="space-y-2">
-              {/* Konseli 1: Anisa */}
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => handleQuickLogin('anisa.pertiwi@gmail.com', 'Anisa Pertiwi')}
-                className="w-full p-2.5 rounded-2xl bg-stone-50 hover:bg-emerald-50/70 border border-stone-200/80 hover:border-emerald-700/50 text-left transition-colors flex items-center justify-between cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-stone-900">Anisa Pertiwi</span>
-                    <span className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md font-semibold">
-                      Peran: Konseli
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-stone-500">
-                    Aktif mengisi 7 hari, riwayat kemajuan grounding
-                  </span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-stone-400" />
-              </button>
-
-              {/* Konseli 2: Budi (Ada Alert) */}
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => handleQuickLogin('budi.santoso@gmail.com', 'Budi Santoso')}
-                className="w-full p-2.5 rounded-2xl bg-stone-50 hover:bg-rose-50/70 border border-stone-200/80 hover:border-rose-300 text-left transition-colors flex items-center justify-between cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-stone-900">Budi Santoso</span>
-                    <span className="text-[10px] text-rose-800 bg-rose-50 px-2 py-0.5 rounded-md font-semibold">
-                      Perhatian Segera
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-stone-500">
-                    Ada catatan keselamatan kekhawatiran 8/10
-                  </span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-stone-400" />
-              </button>
-
-              {/* Konselor: Salsabila */}
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() =>
-                  handleQuickLogin('konselor.salsabila@gmail.com', 'Ibu Salsabila, M.Psi.')
-                }
-                className="w-full p-2.5 rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white text-left transition-colors flex items-center justify-between shadow-xs cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold">Ibu Salsabila, M.Psi.</span>
-                    <span className="text-[10px] text-emerald-950 bg-emerald-100 px-2 py-0.5 rounded-md font-bold">
-                      Peran: Konselor
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-emerald-100/90">
-                    Akses Dasbor Triase, Analisis AI, dan Pantauan Konseli
-                  </span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-emerald-200" />
-              </button>
-
-              {/* Admin & Konselor */}
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() =>
-                  handleQuickLogin('MiftahudinMubarok@gmail.com', 'Miftahudin Mubarok (Admin)')
-                }
-                className="w-full p-2.5 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white text-left transition-colors flex items-center justify-between shadow-xs cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold">Miftahudin Mubarok</span>
-                    <span className="text-[10px] text-amber-200 bg-stone-800 px-2 py-0.5 rounded-md font-bold">
-                      Peran: Admin & Konselor
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-stone-300">
-                    Akses penuh konselor + Menu Kelola Pengguna
-                  </span>
-                </div>
-                <ArrowRight className="w-4 h-4 text-stone-400" />
-              </button>
+          {/* Privasi & Keamanan */}
+          <div className="pt-4 mt-4 border-t border-stone-100">
+            <div className="flex items-center gap-2 text-stone-600 text-xs">
+              <CheckCircle2 className="w-4 h-4 text-emerald-800 shrink-0" />
+              <span>Data pengisian jurnal tersimpan aman dan terenkripsi pada server.</span>
             </div>
           </div>
         </div>

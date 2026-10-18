@@ -1,22 +1,22 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 import { OAuth2Client } from 'google-auth-library';
-import { getStorageDriver } from './server/driveStorage.js';
+import { getStorageDriver } from './server/driveStorage.ts';
 import {
   scanEntryForSafetyRisks,
   computeKonseliAlertBadges,
-} from './server/ruleAlerts.js';
-import { runWeeklyGeminiAnalysis } from './server/geminiAnalysis.js';
-import { createSampleEntries } from './server/seedDemoData.js';
-import {
+} from './server/ruleAlerts.ts';
+import { runWeeklyGeminiAnalysis } from './server/geminiAnalysis.ts';
+import type {
   DailyJournalEntry,
   KonseliSummary,
   UserProfile,
   WeeklyAnalysisRecord,
-} from './src/types/journal.js';
+} from './src/types/journal.ts';
 
 dotenv.config();
 
@@ -29,36 +29,6 @@ const oauthClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : null
 const storage = getStorageDriver();
 
 app.use(express.json({ limit: '10mb' }));
-
-// Seed demo konseli in local storage if empty
-async function seedInitialDemoDataIfEmpty() {
-  try {
-    const konseliList = await storage.listAllKonseliEmails();
-    if (konseliList.length === 0) {
-      console.log('Seeding initial demo konseli records...');
-      const demoKonseli = [
-        { email: 'anisa.pertiwi@gmail.com', name: 'Anisa Pertiwi' },
-        { email: 'budi.santoso@gmail.com', name: 'Budi Santoso' },
-        { email: 'citra.lestari@gmail.com', name: 'Citra Lestari' },
-      ];
-
-      const config = await storage.getConfig();
-      for (const k of demoKonseli) {
-        config.consentTimestamps[k.email] = new Date(Date.now() - 14 * 86400000).toISOString();
-        const entries = createSampleEntries(k.email, k.name);
-        for (const entry of entries) {
-          await storage.saveEntry(k.email, entry);
-        }
-      }
-      await storage.saveConfig(config);
-      console.log('Demo data seeded successfully.');
-    }
-  } catch (err: any) {
-    console.warn('Notice in seedInitialDemoDataIfEmpty (non-fatal):', err?.message || err);
-  }
-}
-
-seedInitialDemoDataIfEmpty().catch((err) => console.warn('Non-fatal seed warning:', err));
 
 // In-memory sessions token store
 const sessionStore: Map<string, UserProfile> = new Map();
@@ -100,19 +70,7 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction): 
     return;
   }
 
-  // If token is in format "demo:<email>:<role>" (for instant demo switching)
-  if (token.startsWith('demo:')) {
-    const parts = token.split(':');
-    const email = parts[1];
-    const name = parts[2] || email.split('@')[0];
-    const profile = await resolveUserProfile(email, name);
-    sessionStore.set(token, profile);
-    (req as any).user = profile;
-    next();
-    return;
-  }
-
-  res.status(401).json({ error: 'Sesi login tidak valid atau telah kedaluwarsa.' });
+  res.status(401).json({ error: 'Sesi login tidak valid atau telah kedaluwarsa. Silakan masuk kembali.' });
 }
 
 // Require Counselor Role
@@ -257,36 +215,6 @@ app.post('/api/auth/login', async (req: Request, res: Response) => {
       return;
     }
 
-    // Auto-create demo account record if it's one of the demo/admin accounts
-    const demoAccountNames: Record<string, string> = {
-      'anisa.pertiwi@gmail.com': 'Anisa Pertiwi',
-      'budi.santoso@gmail.com': 'Budi Santoso',
-      'citra.lestari@gmail.com': 'Citra Lestari',
-      'konselor.salsabila@gmail.com': 'Ibu Salsabila, M.Psi.',
-      [ADMIN_EMAIL]: 'Administrator Konseling',
-    };
-
-    if (demoAccountNames[normEmail]) {
-      const salt = crypto.randomBytes(16).toString('hex');
-      const passwordHash = hashPassword(password, salt);
-      const userRole = (normEmail === ADMIN_EMAIL || normEmail.includes('konselor')) ? 'konselor' : 'konseli';
-      config.accounts.push({
-        email: normEmail,
-        name: demoAccountNames[normEmail],
-        passwordHash,
-        salt,
-        role: userRole as any,
-        createdAt: new Date().toISOString(),
-      });
-      await storage.saveConfig(config);
-
-      const userProfile = await resolveUserProfile(normEmail, demoAccountNames[normEmail]);
-      const sessionToken = `sess_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-      sessionStore.set(sessionToken, userProfile);
-      res.json({ token: sessionToken, user: userProfile });
-      return;
-    }
-
     res.status(401).json({ error: 'Akun belum terdaftar. Silakan pilih tab "Daftar Akun Baru" di atas.' });
   } catch (err: any) {
     console.error('Login error:', err);
@@ -316,12 +244,8 @@ app.post('/api/auth/verify', async (req: Request, res: Response) => {
       email = payload.email;
       name = payload.name || payload.email.split('@')[0];
       picture = payload.picture || '';
-    } else if (demoUser && demoUser.email) {
-      email = demoUser.email;
-      name = demoUser.name || demoUser.email.split('@')[0];
-      picture = demoUser.picture || '';
     } else {
-      res.status(400).json({ error: 'Kredensial login tidak ditemukan.' });
+      res.status(400).json({ error: 'Kredensial login Google tidak ditemukan.' });
       return;
     }
 

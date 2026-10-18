@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import { google } from 'googleapis';
-import { CounselorConfig, DailyJournalEntry, WeeklyAnalysisRecord } from '../src/types/journal.js';
+import type { CounselorConfig, DailyJournalEntry, WeeklyAnalysisRecord } from '../src/types/journal.ts';
 
 export interface StorageDriver {
   isConfigured(): boolean;
-  getStorageMode(): 'google_drive' | 'local_demo';
+  getStorageMode(): 'google_drive' | 'local_server' | 'local_demo';
   getDriveStatus(): {
     isConfigured: boolean;
     isConnected: boolean;
@@ -29,8 +29,6 @@ const LOCAL_DATA_DIR = path.resolve(process.cwd(), '.data');
 const DEFAULT_CONFIG: CounselorConfig = {
   counselorEmails: [
     (process.env.ADMIN_EMAIL || 'MiftahudinMubarok@gmail.com').toLowerCase(),
-    'konselor.salsabila@gmail.com',
-    'konselor.dewi@gmail.com',
   ],
   consentTimestamps: {},
   emergencySettings: {
@@ -51,7 +49,7 @@ const DEFAULT_CONFIG: CounselorConfig = {
 };
 
 /**
- * Local File Driver (Active in DEMO mode or when Google Drive is unconfigured or fails)
+ * Local File Driver (Active for local server storage)
  */
 export class LocalFileStorageDriver implements StorageDriver {
   private baseDir: string;
@@ -68,8 +66,8 @@ export class LocalFileStorageDriver implements StorageDriver {
     return true;
   }
 
-  getStorageMode(): 'local_demo' {
-    return 'local_demo';
+  getStorageMode(): 'local_server' {
+    return 'local_server';
   }
 
   getDriveStatus() {

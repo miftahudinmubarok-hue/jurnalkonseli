@@ -23,7 +23,9 @@ export interface StorageDriver {
   listWeeklyAnalysesForKonseli(email: string): Promise<WeeklyAnalysisRecord[]>;
 }
 
-const LOCAL_DATA_DIR = path.resolve(process.cwd(), '.data');
+const LOCAL_DATA_DIR = process.env.VERCEL
+  ? path.resolve('/tmp', '.data')
+  : path.resolve(process.cwd(), '.data');
 
 // Default initial configuration
 const DEFAULT_CONFIG: CounselorConfig = {

@@ -63,7 +63,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
     try {
       await onLoginManual(loginEmail.trim(), loginPassword);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Gagal masuk akun. Periksa kembali email dan kata sandi Anda.');
+      let msg = err?.message || 'Gagal masuk akun. Periksa kembali email dan kata sandi Anda.';
+      if (msg.includes('NOT_FOUND') || msg.includes('sin1::')) {
+        msg = 'Koneksi ke server sedang disinkronkan. Silakan coba klik sekali lagi.';
+      }
+      setErrorMsg(msg);
     } finally {
       setLoading(false);
     }
@@ -95,7 +99,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
     try {
       await onRegisterManual(regName.trim(), regEmail.trim(), regPassword, regRole);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Gagal mendaftar akun.');
+      let msg = err?.message || 'Gagal mendaftar akun.';
+      if (msg.includes('NOT_FOUND') || msg.includes('sin1::')) {
+        msg = 'Koneksi sedang disinkronkan. Silakan klik "Daftar & Masuk Sekarang" sekali lagi.';
+      }
+      setErrorMsg(msg);
     } finally {
       setLoading(false);
     }

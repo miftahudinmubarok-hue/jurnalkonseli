@@ -1,6 +1,6 @@
 import React from 'react';
 import { PenTool, Calendar, Users, HeartHandshake, Shield } from 'lucide-react';
-import { UserProfile } from '../types/journal.js';
+import { UserProfile } from '../types/journal';
 
 interface BottomNavProps {
   user: UserProfile | null;

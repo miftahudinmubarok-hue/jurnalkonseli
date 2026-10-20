@@ -18,10 +18,10 @@ import {
   CheckCircle2,
   Clock,
 } from 'lucide-react';
-import { DailyJournalEntry, SymptomItem, ThoughtRecordItem, SafetyNoteItem } from '../../types/journal.js';
-import { BreathingExercise } from '../breathing/BreathingExercise.js';
-import { GroundingExercise } from '../grounding/GroundingExercise.js';
-import { saveLocalDraft, getLocalDraft, clearLocalDraft } from '../../services/api.js';
+import { DailyJournalEntry, SymptomItem, ThoughtRecordItem, SafetyNoteItem } from '../../types/journal';
+import { BreathingExercise } from '../breathing/BreathingExercise';
+import { GroundingExercise } from '../grounding/GroundingExercise';
+import { saveLocalDraft, getLocalDraft, clearLocalDraft } from '../../services/api';
 
 interface JournalFormProps {
   initialDate: string;

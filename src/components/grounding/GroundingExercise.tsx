@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, Hand, Volume2, Sparkles, HeartHandshake, CheckCircle2, ChevronRight, HelpCircle } from 'lucide-react';
-import { GroundingStepLog } from '../../types/journal.js';
+import { GroundingStepLog } from '../../types/journal';
 
 interface GroundingExerciseProps {
   logs: GroundingStepLog[];

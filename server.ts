@@ -21,7 +21,8 @@ import type {
 dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
+const isProd = process.env.NODE_ENV === 'production';
+const PORT = isProd ? (Number(process.env.PORT) || 8080) : 3000;
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'MiftahudinMubarok@gmail.com').toLowerCase();
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
 
@@ -662,23 +663,25 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 
 // Vite Middleware mounting (Dev) or Static serving (Prod)
 async function startServer() {
-  if (process.env.NODE_ENV !== 'production') {
+  const distPath = path.resolve(process.cwd(), 'dist');
+  const hasDist = fs.existsSync(path.join(distPath, 'index.html'));
+
+  if (isProd && hasDist) {
+    app.use(express.static(distPath));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  } else {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.resolve(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server Jurnal Harian Konseli berjalan di port ${PORT}`);
+    console.log(`Server Jurnal Harian Konseli berjalan di port ${PORT} (${isProd ? 'production' : 'development'})`);
   });
 }
 

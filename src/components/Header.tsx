@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProfile } from '../types/journal.js';
+import { UserProfile } from '../types/journal';
 import { LogOut, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 interface HeaderProps {

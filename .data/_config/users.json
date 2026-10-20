@@ -2,7 +2,9 @@
   "counselorEmails": [
     "miftahudinmubarok@gmail.com"
   ],
-  "consentTimestamps": {},
+  "consentTimestamps": {
+    "miftahudinmubarok@gmail.com": "2026-10-20T01:08:59.622Z"
+  },
   "emergencySettings": {
     "emergencyNumber": "119",
     "hotlineName": "Layanan Kesehatan Jiwa Kemenkes (Sejiwa)",
@@ -18,5 +20,14 @@
     "inactiveDays": 3,
     "highWorryThreshold": 7
   },
-  "accounts": []
+  "accounts": [
+    {
+      "email": "miftahudinmubarok@gmail.com",
+      "name": "Katrina",
+      "passwordHash": "aed1dc9d030f6851aaf4f55bf7d0ca143ccd64196730dab8018fd21c16fd1472a76045367f4130cea896e93722210a7ccee3d9ee3a191f04dd4054cb13ac4722",
+      "salt": "3d223aff9743c3114259bccbd4e25625",
+      "role": "konselor",
+      "createdAt": "2026-10-20T01:08:54.239Z"
+    }
+  ]
 }

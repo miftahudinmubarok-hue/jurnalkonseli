@@ -4,7 +4,7 @@ import {
   KonseliSummary,
   UserProfile,
   WeeklyAnalysisRecord,
-} from '../types/journal.js';
+} from '../types/journal';
 
 const TOKEN_KEY = 'jurnal_konseli_token';
 const DRAFT_PREFIX = 'jurnal_draft_';

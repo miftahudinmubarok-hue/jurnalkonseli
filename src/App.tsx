@@ -4,17 +4,17 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header.js';
-import { BottomNav } from './components/BottomNav.js';
-import { LoginView } from './components/auth/LoginView.js';
-import { InformedConsentModal } from './components/InformedConsentModal.js';
-import { SafetyAlertModal } from './components/SafetyAlertModal.js';
-import { PrivacyPolicyModal } from './components/PrivacyPolicyModal.js';
-import { JournalForm } from './components/journal/JournalForm.js';
-import { KonseliHistory } from './components/history/KonseliHistory.js';
-import { CounselorDashboard } from './components/counselor/CounselorDashboard.js';
-import { api, getStoredToken, setStoredToken } from './services/api.js';
-import { DailyJournalEntry, UserProfile, CounselorConfig } from './types/journal.js';
+import { Header } from './components/Header';
+import { BottomNav } from './components/BottomNav';
+import { LoginView } from './components/auth/LoginView';
+import { InformedConsentModal } from './components/InformedConsentModal';
+import { SafetyAlertModal } from './components/SafetyAlertModal';
+import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
+import { JournalForm } from './components/journal/JournalForm';
+import { KonseliHistory } from './components/history/KonseliHistory';
+import { CounselorDashboard } from './components/counselor/CounselorDashboard';
+import { api, getStoredToken, setStoredToken } from './services/api';
+import { DailyJournalEntry, UserProfile, CounselorConfig } from './types/journal';
 
 export default function App() {
   const [user, setUser] = useState<UserProfile | null>(null);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Square, AlertCircle, CheckCircle2, RotateCcw } from 'lucide-react';
-import { BreathingStepLog } from '../../types/journal.js';
+import { BreathingStepLog } from '../../types/journal';
 
 interface BreathingExerciseProps {
   logs: BreathingStepLog[];

@@ -30,8 +30,8 @@ import {
   DailyJournalEntry,
   WeeklyAnalysisRecord,
   CounselorConfig,
-} from '../../types/journal.js';
-import { api } from '../../services/api.js';
+} from '../../types/journal';
+import { api } from '../../services/api';
 
 interface CounselorDashboardProps {
   isAdmin: boolean;

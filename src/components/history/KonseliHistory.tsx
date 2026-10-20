@@ -14,7 +14,7 @@ import {
   Shield,
   Eye,
 } from 'lucide-react';
-import { DailyJournalEntry } from '../../types/journal.js';
+import { DailyJournalEntry } from '../../types/journal';
 
 interface KonseliHistoryProps {
   entries: DailyJournalEntry[];

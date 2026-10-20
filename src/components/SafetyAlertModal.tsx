@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, ShieldAlert, Heart, X, MapPin } from 'lucide-react';
-import { CounselorConfig } from '../types/journal.js';
+import { CounselorConfig } from '../types/journal';
 
 interface SafetyAlertModalProps {
   isOpen: boolean;
